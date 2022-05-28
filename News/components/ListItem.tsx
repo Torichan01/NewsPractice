@@ -1,26 +1,28 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    ProgressViewIOSComponent,
+} from 'react-native'
 
-const ListItem = () => {
+const ListItem = ({ imageUrl, title, author }) => {
     return (
         <View style={styles.ItemContainer}>
             <View style={styles.leftContainer}>
                 <Image
                     style={{ height: 100, width: 100 }}
                     source={{
-                        uri: 'https://picsum.photos/200/300',
+                        uri: imageUrl,
                     }}
                 />
             </View>
             <View style={styles.rightContainer}>
                 <Text numberOfLines={3} style={styles.text}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.\Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna aliqua.
+                    {title}
                 </Text>
-                <Text style={styles.subText}>Compornent</Text>
+                <Text style={styles.subText}>{author}</Text>
             </View>
         </View>
     )
