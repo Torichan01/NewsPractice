@@ -11,12 +11,14 @@ const ListItem = ({ imageUrl, title, author }) => {
     return (
         <View style={styles.ItemContainer}>
             <View style={styles.leftContainer}>
-                <Image
-                    style={{ height: 100, width: 100 }}
-                    source={{
-                        uri: imageUrl,
-                    }}
-                />
+                {!!imageUrl && (
+                    <Image
+                        style={{ height: 100, width: 100 }}
+                        source={{
+                            uri: imageUrl,
+                        }}
+                    />
+                )}
             </View>
             <View style={styles.rightContainer}>
                 <Text numberOfLines={3} style={styles.text}>

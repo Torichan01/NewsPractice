@@ -1,27 +1,39 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, View, FlatList, SafeAreaView } from 'react-native'
 import ListItem from './components/ListItem'
-import articles from './dummies/articles'
+import { useEffect, useState } from 'react'
+import Constants from 'expo-constants'
+import axios from 'axios'
+
+const URL = `https://newsapi.org/v2/top-headlines?country=jp&category=business&apiKey=${Constants.manifest.extra.newsApiKey}`
 
 export default function App() {
-    const items = articles.map(articles, (index) => {
-        return (
-            <ListItem
-                imageUrl={articles.urlToImage}
-                title={articles.title}
-                author={articles.author}
-                key={index}
-            />
-        )
-    })
+    const [articles, setArticles] = useState([])
+    useEffect(() => {
+        fetchArticles()
+    }, [])
+
+    const fetchArticles = async () => {
+        try {
+            const response = await axios.get(URL)
+            console.log(response)
+            setArticles(response.data.articles)
+        } catch (error) {}
+    }
     return (
-        <View style={styles.container}>
-            <ListItem
-                imageUrl="https://picsum.photos/200/300"
-                title="Sample"
-                author="a"
+        <SafeAreaView style={styles.container}>
+            <FlatList
+                data={articles}
+                renderItem={({ item }) => (
+                    <ListItem
+                        imageUrl={item.urlToImage}
+                        title={item.title}
+                        author={item.author}
+                    />
+                )}
+                keyExtractor={(item, index) => index.toString()}
             />
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -29,8 +41,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#0000',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     ItemContainer: {
         height: 100,
