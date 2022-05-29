@@ -1,15 +1,10 @@
 import React from 'react'
-import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    ProgressViewIOSComponent,
-} from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const ListItem = ({ imageUrl, title, author }) => {
+const ListItem = ({ imageUrl, title, author, onPress }) => {
     return (
-        <View style={styles.ItemContainer}>
+        <TouchableOpacity style={styles.ItemContainer} onPress={onPress}>
             <View style={styles.leftContainer}>
                 {!!imageUrl && (
                     <Image
@@ -26,7 +21,7 @@ const ListItem = ({ imageUrl, title, author }) => {
                 </Text>
                 <Text style={styles.subText}>{author}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 

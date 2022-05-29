@@ -7,7 +7,8 @@ import axios from 'axios'
 
 const URL = `https://newsapi.org/v2/top-headlines?country=jp&category=business&apiKey=${Constants.manifest.extra.newsApiKey}`
 
-export default HomeScreen = () => {
+export default HomeScreen = (props) => {
+    const { navigation } = props
     const [articles, setArticles] = useState([])
     useEffect(() => {
         fetchArticles()
@@ -28,6 +29,7 @@ export default HomeScreen = () => {
                         imageUrl={item.urlToImage}
                         title={item.title}
                         author={item.author}
+                        onPress={() => navigation.navigate('Article')}
                     />
                 )}
                 keyExtractor={(item, index) => index.toString()}
