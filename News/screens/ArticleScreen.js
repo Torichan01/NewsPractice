@@ -24,11 +24,11 @@ export default ArticlesScreen = ({ route }) => {
             >
                 <Text style={{ margin: 10, fontSize: 30 }}>ADD_CLIP</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
-                onPress=
-                {() => {
+            <TouchableOpacity
+                onPress={() => {
                     dispatch(deleteClip({ clip: article }))
                 }}
+            >
                 <Text style={{ margin: 10, fontSize: 30 }}>DELETE_CLIP</Text>
             </TouchableOpacity>
             <WebView source={{ url: article.url }} />
