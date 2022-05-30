@@ -29,11 +29,7 @@ export default ArticlesScreen = ({ route }) => {
                     dispatch(deleteClip({ clip: article }))
                 }}
             >
-<<<<<<< HEAD
                 <Text style={{ margin: 10, fontSize: 30 }}>DELETE_CLIP</Text>
-=======
-                <Text style={{ margin: 10, fontSize: 30 }}></Text>
->>>>>>> f1cbbcfa41a60afe9b9a0df5270875173d8286c7
             </TouchableOpacity>
             <WebView source={{ url: article.url }} />
         </SafeAreaView>
