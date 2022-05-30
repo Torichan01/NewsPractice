@@ -1,11 +1,11 @@
-import { combineReducers } from 'redux'
+import { combineReducers, createStore } from 'redux'
 import userReducer from './reducers/user'
-import { configureStore } from '@reduxjs/toolkit'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 const rootReducer = combineReducers({
     user: userReducer,
 })
 
-const store = configureStore(rootReducer)
+const store = createStore(rootReducer, composeWithDevTools)
 
 export default store
