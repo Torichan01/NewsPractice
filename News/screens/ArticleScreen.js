@@ -1,37 +1,44 @@
-import React from 'react'
-import { StyleSheet, Text, SafeAreaView, TouchableOpacity } from 'react-native'
-import { WebView } from 'react-native-webview'
-import { useDispatch } from 'react-redux'
-import { addClip, deleteClip } from './store/actions/user'
+import React from 'react';
+import {StyleSheet, SafeAreaView, Text, TouchableOpacity} from 'react-native';
+import {WebView} from 'react-native-webview';
+import {connect} from 'react-redux';
+import {addClip, deleteClip} from '../store/actions/user';
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#0000',
-    },
-})
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
 
-export default ArticlesScreen = ({ route }) => {
-    const { article } = route.params
+const ArticleScreen = (props) => {
+  const {route, addClip, deleteClip} = props;
+  const {article} = route.params;
+  return (
+    <SafeAreaView style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          addClip({clip: article});
+        }}>
+        <Text style={{margin: 10, fontSize: 30}}>ADD_CLIP</Text>
+      </TouchableOpacity>
 
-    const dispatch = useDispatch()
-    return (
-        <SafeAreaView style={styles.container}>
-            <TouchableOpacity
-                onPress={() => {
-                    dispatch(addClip({ clip: article }))
-                }}
-            >
-                <Text style={{ margin: 10, fontSize: 30 }}>ADD_CLIP</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
-                onPress=
-                {() => {
-                    dispatch(deleteClip({ clip: article }))
-                }}
-                <Text style={{ margin: 10, fontSize: 30 }}>DELETE_CLIP</Text>
-            </TouchableOpacity>
-            <WebView source={{ url: article.url }} />
-        </SafeAreaView>
-    )
-}
+      <TouchableOpacity
+        onPress={() => {
+          deleteClip({clip: article});
+        }}>
+        <Text style={{margin: 10, fontSize: 30}}>DELETE_CLIP</Text>
+      </TouchableOpacity>
+      <WebView source={{uri: article.url}} />
+    </SafeAreaView>
+  );
+};
+
+const mapStateProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = {addClip, deleteClip};
+export default connect(mapStateProps, mapDispatchToProps)(ArticleScreen);
