@@ -1,12 +1,15 @@
 import React from 'react'
 import AppNavigator from './navigation/AppNavigator'
+import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
-import store from './screens/store'
+import store, { persister } from './store'
 
-export default App = () => {
+export default function App() {
     return (
         <Provider store={store}>
-            <AppNavigator />
+            <PersistGate loading={null} persister={persistor}>
+                <AppNavigator />
+            </PersistGate>
         </Provider>
     )
 }

@@ -3,15 +3,10 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 
 const ListItem = ({ imageUrl, title, author, onPress }) => {
     return (
-        <TouchableOpacity style={styles.ItemContainer} onPress={onPress}>
+        <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
             <View style={styles.leftContainer}>
                 {!!imageUrl && (
-                    <Image
-                        style={{ height: 100, width: 100 }}
-                        source={{
-                            uri: imageUrl,
-                        }}
-                    />
+                    <Image style={styles.image} source={{ uri: imageUrl }} />
                 )}
             </View>
             <View style={styles.rightContainer}>
@@ -27,7 +22,7 @@ const ListItem = ({ imageUrl, title, author, onPress }) => {
 export default ListItem
 
 const styles = StyleSheet.create({
-    ItemContainer: {
+    itemContainer: {
         height: 100,
         width: '100%',
         borderColor: 'gray',
@@ -36,11 +31,12 @@ const styles = StyleSheet.create({
     },
     leftContainer: {
         width: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     rightContainer: {
         flex: 1,
-        flexDirection: 'column',
-        padding: 10,
+        padding: 16,
         justifyContent: 'space-between',
     },
     text: {
@@ -49,5 +45,9 @@ const styles = StyleSheet.create({
     subText: {
         fontSize: 12,
         color: 'gray',
+    },
+    image: {
+        width: 95,
+        height: 95,
     },
 })
