@@ -1,37 +1,47 @@
 import React from 'react'
-import { StyleSheet, Text, SafeAreaView, TouchableOpacity } from 'react-native'
+import { StyleSheet, SafeAreaView } from 'react-native'
 import { WebView } from 'react-native-webview'
-import { useDispatch } from 'react-redux'
-import { addClip, deleteClip } from './store/actions/user'
+import { useDispatch, useSelector } from 'react-redux'
+import { addClip, deleteClip } from '../store/actions/user'
+import ClipButton from '../components/ClipButton'
+import Loading from '../components/Loading'
 
+export default function ArticleScreen(props) {
+    const { route } = props
+    const { article } = route.params
+
+    const user = useSelector((state) => state.user)
+
+    const dispatch = useDispatch()
+
+    const isClipped = () => {
+        return user.clips.some((clip) => clip.url === article.url)
+    }
+
+    const toggleClip = () => {
+        if (isClipped()) {
+            dispatch(deleteClip({ clip: article }))
+        } else {
+            dispatch(addClip({ clip: article }))
+        }
+    }
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <ClipButton onPress={toggleClip} enabled={isClipped()} />
+            <WebView
+                source={{ uri: article.url }}
+                startInLoadingState={true}
+                renderLoading={() => {
+                    return <Loading />
+                }}
+            />
+        </SafeAreaView>
+    )
+}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#0000',
     },
 })
-
-export default ArticlesScreen = ({ route }) => {
-    const { article } = route.params
-
-    const dispatch = useDispatch()
-    return (
-        <SafeAreaView style={styles.container}>
-            <TouchableOpacity
-                onPress={() => {
-                    dispatch(addClip({ clip: article }))
-                }}
-            >
-                <Text style={{ margin: 10, fontSize: 30 }}></Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={() => {
-                    dispatch(deleteClip({ clip: article }))
-                }}
-            >
-                <Text style={{ margin: 10, fontSize: 30 }}>DELETE_CLIP</Text>
-            </TouchableOpacity>
-            <WebView source={{ url: article.url }} />
-        </SafeAreaView>
-    )
-}
